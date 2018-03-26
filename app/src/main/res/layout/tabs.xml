@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:layout_gravity="bottom"
+    tools:background="@color/colorAccent">
+    
+    <ImageView
+        android:id="@+id/recordButton"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/circle"
+        android:layout_gravity="center|top"/>
+    <ImageView
+        android:id="@+id/homeButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="start|top"
+        android:src="@drawable/ic_home_24dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="40dp"/>
+    <ImageView
+        android:id="@+id/cameraButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="end|top"
+        android:src="@drawable/ic_videocam_24dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginRight="40dp"/>
+
+</FrameLayout>
