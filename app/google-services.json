@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "103650917763",
+    "firebase_url": "https://pelican-305f6.firebaseio.com",
+    "project_id": "pelican-305f6",
+    "storage_bucket": "pelican-305f6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:103650917763:android:dd55b321f7e66cdf",
+        "android_client_info": {
+          "package_name": "pelican.pelican"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "103650917763-ev27lrguuroohauco8toraugqo6bc7eb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "pelican.pelican",
+            "certificate_hash": "c4121192adb3ee06e0ed538c1a541ba3af9f6cd7"
+          }
+        },
+        {
+          "client_id": "103650917763-gom995dh5c2tk028nl4ef773f8cps7oi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWWgk0oD-sS-ex7LdR6RIXJIGzP3Uhb78"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "103650917763-gom995dh5c2tk028nl4ef773f8cps7oi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
