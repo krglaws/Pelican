@@ -1,6 +1,5 @@
 package pelican.pelican;
 
-import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -13,29 +12,25 @@ import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
     FragmentPagerAdapter adapterViewPager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ViewPager viewPager = findViewById(R.id.viewPager);
-        adapterViewPager = new pagerAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(adapterViewPager);
-        viewPager.setCurrentItem(0);
+        ViewPager mViewPager = findViewById(R.id.viewPager);
+        adapterViewPager = new CustomPagerAdapter(getSupportFragmentManager());
+        mViewPager.setAdapter(adapterViewPager);
+        mViewPager.setCurrentItem(0);
+        mViewPager.setPageTransformer(true, new CustomPageTransformer());
 
-        final View background = findViewById(R.id.background);
         final ImageView recordButton = findViewById(R.id.recordButton);
 
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                if (position == 0){
-                    background.setAlpha(1 - positionOffset);
-                    recordButton.setAlpha(positionOffset);
-                } else {
-                    background.setAlpha(positionOffset);
-                    recordButton.setAlpha(1 - positionOffset);
-                }
+                if (position == 0) recordButton.setAlpha(positionOffset);
+                else recordButton.setAlpha(1 - positionOffset);
             }
 
             @Override
@@ -48,12 +43,10 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
     }
     //custom pager adapter
-    public static class pagerAdapter extends FragmentPagerAdapter {
-
-        public pagerAdapter(FragmentManager fm) {
+    private static class CustomPagerAdapter extends FragmentPagerAdapter {
+        private CustomPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
@@ -69,6 +62,22 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             return 2;
+        }
+    }
+    //custom page transformer
+    private static class CustomPageTransformer implements ViewPager.PageTransformer {
+        public void transformPage(View view, float position) {
+            //view overlap
+            view.setTranslationX(view.getWidth() * -position);
+
+            //change alpha based on position
+            if(position <= -1.0F || position >= 1.0F) {
+                view.setAlpha(0.0F);
+            } else if( position == 0.0F ) {
+                view.setAlpha(1.0F);
+            } else { //position is between -1.0F & 0.0F OR 0.0F & 1.0F
+                view.setAlpha(1.0F - Math.abs(position));
+            }
         }
     }
 }
