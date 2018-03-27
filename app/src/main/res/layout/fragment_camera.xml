@@ -8,6 +8,13 @@
         android:id="@+id/textureView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+    <ImageView
+        android:id="@+id/recordButton"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/circle"
+        android:layout_gravity="center|bottom"
+        android:layout_marginBottom="20dp"/>
 
     <TextView
         android:layout_width="match_parent"

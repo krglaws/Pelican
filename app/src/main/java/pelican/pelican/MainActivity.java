@@ -1,6 +1,5 @@
 package pelican.pelican;
 
-import android.annotation.SuppressLint;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -8,63 +7,21 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageView;
+
 
 public class MainActivity extends AppCompatActivity {
-    FragmentPagerAdapter adapterViewPager;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         ViewPager mViewPager = findViewById(R.id.viewPager);
-        adapterViewPager = new CustomPagerAdapter(getSupportFragmentManager());
+        FragmentPagerAdapter adapterViewPager = new CustomPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(adapterViewPager);
         mViewPager.setCurrentItem(0);
         mViewPager.setPageTransformer(true, new CustomPageTransformer());
 
-        final ImageView recordButton = findViewById(R.id.recordButton);
-
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                if (position == 0) recordButton.setAlpha(positionOffset);
-                else recordButton.setAlpha(1 - positionOffset);
-            }
-
-            @SuppressLint("ClickableViewAccessibility")
-            @Override
-            public void onPageSelected(final int position) {
-                recordButton.setOnTouchListener(new View.OnTouchListener(){
-                    @Override
-                    public boolean onTouch(View view, MotionEvent motionEvent) {
-                        if (position == 1) {
-                            switch (motionEvent.getAction()) {
-                                case MotionEvent.ACTION_DOWN:
-                                    Log.i("TAG", "touched down");
-                                    break;
-                                case MotionEvent.ACTION_MOVE:
-                                    Log.i("TAG", "moving");
-                                    break;
-                                case MotionEvent.ACTION_UP:
-                                    Log.i("TAG", "touched up");
-                                    break;
-                            }
-                        }
-                        return true;
-                    }
-                });
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
     }
     //custom pager adapter
     private static class CustomPagerAdapter extends FragmentPagerAdapter {
@@ -102,4 +59,5 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
 }

@@ -5,13 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:layout_gravity="bottom"
     tools:background="@color/colorAccent">
-    
-    <ImageView
-        android:id="@+id/recordButton"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:src="@drawable/circle"
-        android:layout_gravity="center|top"/>
+
     <ImageView
         android:id="@+id/homeButton"
         android:layout_width="40dp"
