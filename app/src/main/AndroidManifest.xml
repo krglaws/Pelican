@@ -23,10 +23,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
-        <activity android:name=".ChooseLoginRegistrationActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".RegistrationActivity"/>
+        <activity android:name=".MainActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ChooseLoginRegistrationActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".LoginActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".RegistrationActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".VideoPlayer" android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

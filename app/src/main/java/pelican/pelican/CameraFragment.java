@@ -1,6 +1,7 @@
 package pelican.pelican;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
@@ -60,6 +61,7 @@ public class CameraFragment extends Fragment implements TextureView.SurfaceTextu
                         case MotionEvent.ACTION_UP:
                             Log.i("TAG", "touched up");
                             releaseMediaRecorder();
+                            startActivity(new Intent(getActivity(), VideoPlayer.class));
                             break;
                     }
                 return true;
@@ -105,6 +107,7 @@ public class CameraFragment extends Fragment implements TextureView.SurfaceTextu
     }
     public void startMediaRecorder() {
         mMediaRecorder = new MediaRecorder();
+        mMediaRecorder.setOrientationHint(90);
         mCamera.unlock();
         mMediaRecorder.setCamera(mCamera);
 
