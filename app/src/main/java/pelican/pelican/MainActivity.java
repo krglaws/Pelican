@@ -16,10 +16,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        int position = 0;
+        Bundle extras = getIntent().getExtras();
+        if(extras != null) {
+            position = extras.getInt("pos");
+        }
         ViewPager mViewPager = findViewById(R.id.viewPager);
         FragmentPagerAdapter adapterViewPager = new CustomPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(adapterViewPager);
-        mViewPager.setCurrentItem(0);
+        mViewPager.setCurrentItem(position);
         mViewPager.setPageTransformer(true, new CustomPageTransformer());
 
     }
