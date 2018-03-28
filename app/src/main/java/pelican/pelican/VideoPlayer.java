@@ -1,10 +1,10 @@
 package pelican.pelican;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.VideoView;
@@ -14,6 +14,8 @@ import android.widget.VideoView;
  */
 
 public class VideoPlayer extends Activity {
+    VideoView mVideoView;
+    int stopPosition;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,7 +26,7 @@ public class VideoPlayer extends Activity {
 
         String dir = getCacheDir().getAbsolutePath();
         dir += "/video.mp4";
-        VideoView mVideoView = findViewById(R.id.videoView);
+        mVideoView = findViewById(R.id.videoView);
         mVideoView.setVideoPath(dir);
         mVideoView.setOnPreparedListener (new MediaPlayer.OnPreparedListener() {
             @Override
@@ -42,6 +44,19 @@ public class VideoPlayer extends Activity {
                 startActivity(mIntent);
             }
         });
-
+    }
+    @Override
+    public void onPause() {
+        Log.d("TAG", "onPause called");
+        super.onPause();
+        stopPosition = mVideoView.getCurrentPosition();
+        mVideoView.pause();
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d("TAG", "onResume called");
+        mVideoView.seekTo(stopPosition);
+        mVideoView.start();
     }
 }

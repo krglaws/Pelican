@@ -29,7 +29,9 @@ public class CameraFragment extends Fragment implements TextureView.SurfaceTextu
     private Camera mCamera;
     private TextureView mTextureView;
     private MediaRecorder mMediaRecorder;
+    private SurfaceTexture mSurface;
     private String dir;
+    private int currentCamera = Camera.CameraInfo.CAMERA_FACING_BACK;
 
     public static CameraFragment newInstance(){
         CameraFragment fragment = new CameraFragment();
@@ -46,20 +48,32 @@ public class CameraFragment extends Fragment implements TextureView.SurfaceTextu
         dir = mContext.getCacheDir().getAbsolutePath();
         dir += "/video.mp4";
 
+        final ImageView swapButton = view.findViewById(R.id.swapButton);
         ImageView recordButton = view.findViewById(R.id.recordButton);
+
         recordButton.setOnTouchListener(new View.OnTouchListener(){
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                     switch (motionEvent.getAction()) {
                         case MotionEvent.ACTION_DOWN:
-                            Log.i("TAG", "touched down");
+                            Log.i("TAG", "ACTION_DOWN");
                             startMediaRecorder();
+                            swapButton.setVisibility(View.GONE);
                             break;
                         /*case MotionEvent.ACTION_MOVE:
                             Log.i("TAG", "moving");
                             break;*/
                         case MotionEvent.ACTION_UP:
-                            Log.i("TAG", "touched up");
+                            Log.i("TAG", "ACTION_UP");
+                            // stop recording and release camera
+                            try {
+                                mMediaRecorder.stop();  // stop the recording
+                            }
+                            catch (RuntimeException e) {
+                                Log.d("TAG", "RuntimeException: stop() is called immediately after start()");
+                                swapButton.setVisibility(View.VISIBLE);
+                                break;
+                            }
                             releaseMediaRecorder();
                             startActivity(new Intent(getActivity(), VideoPlayer.class));
                             break;
@@ -68,9 +82,38 @@ public class CameraFragment extends Fragment implements TextureView.SurfaceTextu
             }
         });
 
+        swapButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                mCamera.stopPreview();
+                //NB: if you don't release the current camera before switching, you app will crash
+                mCamera.release();
+                //swap the id of the camera to be used
+                if(currentCamera == Camera.CameraInfo.CAMERA_FACING_BACK){
+                    currentCamera = Camera.CameraInfo.CAMERA_FACING_FRONT;
+                    swapButton.setImageResource(R.drawable.ic_camera_rear_24dp);
+                }
+                else {
+                    currentCamera = Camera.CameraInfo.CAMERA_FACING_BACK;
+                    swapButton.setImageResource(R.drawable.ic_camera_front_24dp);
+                }
+                mCamera = Camera.open(currentCamera);
+                mCamera.setDisplayOrientation(90);
+                try {
+                    mCamera.setPreviewTexture(mSurface);
+                    mCamera.startPreview();
+                }
+                catch (IOException ioe) {
+                    // Something bad happened
+                }
+            }
+        });
         return view;
     }
+
+
     public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
+        mSurface = surface;
         mCamera = Camera.open();
 
         Camera.Parameters parameters;
@@ -105,13 +148,32 @@ public class CameraFragment extends Fragment implements TextureView.SurfaceTextu
     public void onSurfaceTextureUpdated(SurfaceTexture surface) {
         // Invoked every time there's a new Camera preview frame
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        releaseMediaRecorder();
+    }
+
+    public void releaseMediaRecorder() {
+        if (mMediaRecorder != null) {
+            mMediaRecorder.reset();
+            mMediaRecorder.release();
+            mMediaRecorder = null;
+            mCamera.lock();
+        }
+    }
+
     public void startMediaRecorder() {
         mMediaRecorder = new MediaRecorder();
-        mMediaRecorder.setOrientationHint(90);
+        if(currentCamera == Camera.CameraInfo.CAMERA_FACING_BACK) {
+            mMediaRecorder.setOrientationHint(90);
+        }
+        else mMediaRecorder.setOrientationHint(270);
         mCamera.unlock();
         mMediaRecorder.setCamera(mCamera);
 
-        mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);
         mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
 
         CamcorderProfile profile = CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH);
@@ -130,14 +192,6 @@ public class CameraFragment extends Fragment implements TextureView.SurfaceTextu
         catch (IOException e) {
             e.printStackTrace();
             releaseMediaRecorder();
-        }
-    }
-    public void releaseMediaRecorder() {
-        if (mMediaRecorder != null) {
-            mMediaRecorder.reset();
-            mMediaRecorder.release();
-            mMediaRecorder = null;
-            mCamera.lock();
         }
     }
 }
