@@ -1,0 +1,10 @@
+Permissions Prompt
+Finish video uploading
+Main Feed UI
+Video Streaming
+UI Animation
+Profile Screen
+Profile Customization
+Following
+Upvotes/Downvotes
+Splash Screen Graphic
