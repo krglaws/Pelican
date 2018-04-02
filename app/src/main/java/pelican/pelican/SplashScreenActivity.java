@@ -3,6 +3,7 @@ package pelican.pelican;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -11,9 +12,12 @@ public class SplashScreenActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        boolean started = false;
+        //setContentView(R.layout.activity_main);
+        try {
+            Thread.sleep(2000);
+        }catch (InterruptedException e){
+            Log.d("Splash Screen Error", e.toString());
+        }
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
         // if user is already logged in
