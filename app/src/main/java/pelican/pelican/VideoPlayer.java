@@ -3,11 +3,25 @@ package pelican.pelican;
 import android.app.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.VideoView;
+
+
+// for VideoUploadTask
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * Created by Sebastian on 3/27/2018.
@@ -24,8 +38,8 @@ public class VideoPlayer extends Activity {
         decorView.setSystemUiVisibility(uiOptions);
         setContentView(R.layout.video_player);
 
-        String dir = getCacheDir().getAbsolutePath();
-        dir += "/video.mp4";
+        final String dir = getCacheDir().getAbsolutePath()+"/video.mp4";
+
         mVideoView = findViewById(R.id.videoView);
         mVideoView.setVideoPath(dir);
         mVideoView.setOnPreparedListener (new MediaPlayer.OnPreparedListener() {
@@ -39,6 +53,17 @@ public class VideoPlayer extends Activity {
         ImageView closeButton = findViewById(R.id.closeButton);
         closeButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
+                Intent mIntent = new Intent(VideoPlayer.this, MainActivity.class);
+                mIntent.putExtra("pos", 1);
+                startActivity(mIntent);
+            }
+        });
+
+        ImageView uploadButton = findViewById(R.id.uploadButton);
+        uploadButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view){
+                VideoUploadTask uploadTask = new VideoUploadTask();
+                uploadTask.execute(dir);
                 Intent mIntent = new Intent(VideoPlayer.this, MainActivity.class);
                 mIntent.putExtra("pos", 1);
                 startActivity(mIntent);
@@ -58,5 +83,89 @@ public class VideoPlayer extends Activity {
         Log.d("TAG", "onResume called");
         mVideoView.seekTo(stopPosition);
         mVideoView.start();
+    }
+
+    public class VideoUploadTask extends AsyncTask<String, Void, Integer> {
+
+        @Override
+        protected Integer doInBackground(String... strings) {
+
+            String uploadServerUri = "http://216.146.179.204/save_file.php";
+            String sourceFileUri = strings[0];
+            int bytesRead, bytesAvailable, bufferSize, serverResponseCode = -1;
+            byte[] buffer;
+            int maxBufferSize = 1 * 1024 * 1024;
+            String lineEnd = "\r\n";
+            String twoHyphens = "--";
+            String boundary = "*****";
+            HttpURLConnection connection = null;
+            DataOutputStream dos = null;
+            URL url = null;
+
+            try {
+                FileInputStream fileInputStream = new FileInputStream(new File(sourceFileUri));
+                url = new URL(uploadServerUri);
+                connection = (HttpURLConnection) url.openConnection();
+                connection.setDoInput(true); // Allow Inputs
+                connection.setDoOutput(true); // Allow Outputs
+                connection.setUseCaches(false); // Don't use a Cached Copy
+                connection.setRequestMethod("POST");
+                connection.setRequestProperty("Connection", "Keep-Alive");
+                connection.setRequestProperty("ENCTYPE", "multipart/form-data");
+                connection.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
+                connection.setRequestProperty("uploaded_file", sourceFileUri);
+                dos = new DataOutputStream(connection.getOutputStream());
+                dos.writeBytes(twoHyphens + boundary + lineEnd);
+                dos.writeBytes(
+                        "Content-Disposition: form-data; name=\"uploaded_file\";filename=\"" + sourceFileUri + "\"" + lineEnd);
+                dos.writeBytes(lineEnd);
+                bytesAvailable = fileInputStream.available(); // create a buffer of maximum size
+                bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                buffer = new byte[bufferSize];
+
+                bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+                while (bytesRead > 0) {
+                    dos.write(buffer, 0, bufferSize);
+                    bytesAvailable = fileInputStream.available();
+                    bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                    bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+                }
+                // send multipart form data necesssary after file data...
+                dos.writeBytes(lineEnd);
+                dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+
+                // Responses from the server (code and message)
+                serverResponseCode = connection.getResponseCode();
+                String serverResponseMessage = connection.getResponseMessage();
+                Log.d("Upload Status","Upload file to server, HTTP Response is : " + serverResponseMessage + ": " + serverResponseCode);
+                // close streams
+                Log.d("Upload Status","Upload file to server, File is written");
+                fileInputStream.close();
+                dos.flush();
+                dos.close();
+            }catch(FileNotFoundException e){
+                Log.d("Video file not found", e.toString());
+                return null;
+            }catch(MalformedURLException e){
+                Log.d("Invalid URL", e.toString());
+                return null;
+            }catch(IOException e){
+                Log.d("IOException", e.toString());
+                return null;
+            }
+
+            // this block will give the response of upload link
+            try {
+                BufferedReader rd = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String line;
+                while ((line = rd.readLine()) != null) {
+                    Log.d("Server Response","Huzza, RES Message: " + line);
+                }
+                rd.close();
+            } catch (IOException ioex) {
+                Log.d("Error","Huzza, error: " + ioex.getMessage());
+            }
+            return serverResponseCode; // like 200 (Ok)
+        }
     }
 }
