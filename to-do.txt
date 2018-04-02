@@ -1,10 +1,21 @@
-Permissions Prompt
-Finish video uploading
-Main Feed UI
-Video Streaming
-UI Animation
-Profile Screen
-Profile Customization
-Following
-Upvotes/Downvotes
-Splash Screen Graphic
+To Do:
+
+April 9th
+  Permissions Prompt
+  Finish video uploading
+  Splash Screen Graphic
+  
+April 16th
+  Video Streaming
+  Make Registration/Login screens prettier
+  Main Feed UI  
+
+April 23
+  UI Animation
+  Profile Screen
+
+April 30
+  Profile Customization
+  Following
+  Upvotes/Downvotes
+
