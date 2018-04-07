@@ -1,9 +1,11 @@
 To Do:
 
 April 9th
-  Permissions Prompt
-  Finish video uploading
-  Splash Screen Graphic
+  Permissions Prompt      - DONE
+  Finish video uploading  - mostly done
+                              - php script needs to accept video file extensions
+                              - generate new names for each video file created
+  Splash Screen Graphic   - DONE
   
 April 16th
   Video Streaming
