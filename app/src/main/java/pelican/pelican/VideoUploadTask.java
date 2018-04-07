@@ -2,7 +2,6 @@ package pelican.pelican;
 
 import android.os.AsyncTask;
 import android.util.Log;
-
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
