@@ -28,8 +28,11 @@ import java.net.URL;
  */
 
 public class VideoPlayer extends Activity {
+
+    private static final String TAG = "VideoPlayer";
     VideoView mVideoView;
     int stopPosition;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +75,7 @@ public class VideoPlayer extends Activity {
     }
     @Override
     public void onPause() {
-        Log.d("TAG", "onPause called");
+        Log.d(TAG, "onPause called");
         super.onPause();
         stopPosition = mVideoView.getCurrentPosition();
         mVideoView.pause();
@@ -80,7 +83,7 @@ public class VideoPlayer extends Activity {
     @Override
     public void onResume() {
         super.onResume();
-        Log.d("TAG", "onResume called");
+        Log.d(TAG, "onResume called");
         mVideoView.seekTo(stopPosition);
         mVideoView.start();
     }
@@ -90,7 +93,7 @@ public class VideoPlayer extends Activity {
         @Override
         protected Integer doInBackground(String... strings) {
 
-            String uploadServerUri = "http://216.146.179.204/save_file.php";
+            String uploadServerUri = "http://entropy7.nas.eckerd.edu/pelican/upload.php";
             String sourceFileUri = strings[0];
             int bytesRead, bytesAvailable, bufferSize, serverResponseCode = -1;
             byte[] buffer;
@@ -137,20 +140,19 @@ public class VideoPlayer extends Activity {
                 // Responses from the server (code and message)
                 serverResponseCode = connection.getResponseCode();
                 String serverResponseMessage = connection.getResponseMessage();
-                Log.d("Upload Status","Upload file to server, HTTP Response is : " + serverResponseMessage + ": " + serverResponseCode);
+                Log.d(TAG,"Connecting to server, HTTP Response is : " + serverResponseMessage + ": " + serverResponseCode);
                 // close streams
-                Log.d("Upload Status","Upload file to server, File is written");
                 fileInputStream.close();
                 dos.flush();
                 dos.close();
             }catch(FileNotFoundException e){
-                Log.d("Video file not found", e.toString());
+                Log.d(TAG, e.toString());
                 return null;
             }catch(MalformedURLException e){
-                Log.d("Invalid URL", e.toString());
+                Log.d(TAG, e.toString());
                 return null;
             }catch(IOException e){
-                Log.d("IOException", e.toString());
+                Log.d(TAG, e.toString());
                 return null;
             }
 
@@ -159,11 +161,11 @@ public class VideoPlayer extends Activity {
                 BufferedReader rd = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 String line;
                 while ((line = rd.readLine()) != null) {
-                    Log.d("Server Response","Huzza, RES Message: " + line);
+                    Log.d(TAG, line);
                 }
                 rd.close();
             } catch (IOException ioex) {
-                Log.d("Error","Huzza, error: " + ioex.getMessage());
+                Log.d(TAG, ioex.getMessage());
             }
             return serverResponseCode; // like 200 (Ok)
         }
