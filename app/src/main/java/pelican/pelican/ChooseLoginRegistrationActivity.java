@@ -21,7 +21,6 @@ public class ChooseLoginRegistrationActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplication(), LoginActivity.class);
                 startActivity(intent);
-                return;
             }
         });
         mRegistration.setOnClickListener(new View.OnClickListener() {
@@ -29,7 +28,6 @@ public class ChooseLoginRegistrationActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplication(), RegistrationActivity.class);
                 startActivity(intent);
-                return;
             }
         });
     }

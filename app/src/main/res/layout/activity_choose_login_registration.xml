@@ -7,16 +7,31 @@
     tools:context="pelican.pelican.ChooseLoginRegistrationActivity"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.7"
+        android:background="@drawable/gradient">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/pelican_logo"
+            ></ImageView>
+    </LinearLayout>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="0.15"
         android:text="Login"
+        android:background="@color/colorAccent"
         android:id="@+id/login"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="0.15"
         android:text="Registration"
+        android:background="@color/colorPrimary"
         android:id="@+id/registration"/>
 
 </LinearLayout>
