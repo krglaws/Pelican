@@ -1,6 +1,5 @@
 package pelican.pelican;
 
-
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -9,16 +8,12 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-
-
 import com.google.firebase.auth.FirebaseAuth;
-
 import static java.lang.System.exit;
 
 public class SplashScreenActivity extends AppCompatActivity{
 
     final int PERMISSIONS_REQUEST = 0;
-
     private static final String TAG = "SplashScreenActivity";
 
     @Override
@@ -48,32 +43,15 @@ public class SplashScreenActivity extends AppCompatActivity{
 
         // if user is already logged in
         if (mAuth.getCurrentUser() != null) {
-
-            // create intent to skip login/registration and go to MainActivity
             Intent intent = new Intent(getApplication(), MainActivity.class);
-
-            // erase everything on top of this activity
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-            // go to MainActivity
             startActivity(intent);
-
-            // close current activity
             finish();
-
             // user is not logged in
         } else {
-
-            // create intent to go to login/registration
             Intent intent = new Intent(getApplication(), ChooseLoginRegistrationActivity.class);
-
-            // erase everything on top of this activity
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-            // go to ChooseLoginRegistrationActivity
             startActivity(intent);
-
-            // close current activity
             finish();
         }
     }

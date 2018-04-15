@@ -4,12 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <VideoView
+        android:id="@+id/videoView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <ImageView
         android:id="@+id/closeButton"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
         android:src="@drawable/ic_close_24dp"/>
 
     <ImageView
@@ -19,10 +24,5 @@
         android:layout_marginTop="500dp"
         android:layout_marginLeft="150dp"
         android:src="@drawable/upload_arrow"/>
-
-    <VideoView
-        android:id="@+id/videoView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
 </FrameLayout>

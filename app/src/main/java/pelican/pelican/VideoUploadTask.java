@@ -26,6 +26,7 @@ public class VideoUploadTask extends AsyncTask<String, Void, Integer> {
 
         String uploadServerUri = "http://entropy7.nas.eckerd.edu/pelican/upload.php";
         String sourceFileUri = strings[0];
+        File tempVideoFile = new File(sourceFileUri);
         int bytesRead, bytesAvailable, bufferSize, serverResponseCode = -1;
         byte[] buffer;
         int maxBufferSize = 1 * 1024 * 1024;
@@ -37,7 +38,7 @@ public class VideoUploadTask extends AsyncTask<String, Void, Integer> {
         URL url = null;
 
         try {
-            FileInputStream fileInputStream = new FileInputStream(new File(sourceFileUri));
+            FileInputStream fileInputStream = new FileInputStream(tempVideoFile);
             url = new URL(uploadServerUri);
             connection = (HttpURLConnection) url.openConnection();
             connection.setDoInput(true); // Allow Inputs
@@ -98,6 +99,10 @@ public class VideoUploadTask extends AsyncTask<String, Void, Integer> {
         } catch (IOException ioex) {
             Log.d(TAG, ioex.getMessage());
         }
+
+        // delete temporary file
+        tempVideoFile.delete();
+
         return serverResponseCode; // like 200 (Ok)
     }
 }

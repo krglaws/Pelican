@@ -27,10 +27,11 @@ public class VideoPlayer extends Activity {
         decorView.setSystemUiVisibility(uiOptions);
         setContentView(R.layout.video_player);
 
-        final String dir = getCacheDir().getAbsolutePath()+"/video.mp4";
+        // grab video file path from CameraFragment Intent
+        final  String videoFilePath = this.getIntent().getExtras().getString("video_file_path");
 
         mVideoView = findViewById(R.id.videoView);
-        mVideoView.setVideoPath(dir);
+        mVideoView.setVideoPath(videoFilePath);
         mVideoView.setOnPreparedListener (new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
@@ -52,7 +53,7 @@ public class VideoPlayer extends Activity {
         uploadButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
                 VideoUploadTask uploadTask = new VideoUploadTask();
-                uploadTask.execute(dir);
+                uploadTask.execute(videoFilePath);
                 Intent mIntent = new Intent(VideoPlayer.this, MainActivity.class);
                 mIntent.putExtra("pos", 1);
                 startActivity(mIntent);
