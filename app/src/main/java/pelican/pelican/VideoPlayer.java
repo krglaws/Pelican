@@ -14,8 +14,11 @@ import android.widget.VideoView;
  */
 
 public class VideoPlayer extends Activity {
+
+    private static final String TAG = "VideoPlayer";
     VideoView mVideoView;
     int stopPosition;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,10 +27,11 @@ public class VideoPlayer extends Activity {
         decorView.setSystemUiVisibility(uiOptions);
         setContentView(R.layout.video_player);
 
-        String dir = getCacheDir().getAbsolutePath();
-        dir += "/video.mp4";
+        // grab video file path from CameraFragment Intent
+        final  String videoFilePath = this.getIntent().getExtras().getString("video_file_path");
+
         mVideoView = findViewById(R.id.videoView);
-        mVideoView.setVideoPath(dir);
+        mVideoView.setVideoPath(videoFilePath);
         mVideoView.setOnPreparedListener (new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
@@ -44,10 +48,21 @@ public class VideoPlayer extends Activity {
                 startActivity(mIntent);
             }
         });
+
+        ImageView uploadButton = findViewById(R.id.uploadButton);
+        uploadButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view){
+                VideoUploadTask uploadTask = new VideoUploadTask();
+                uploadTask.execute(videoFilePath);
+                Intent mIntent = new Intent(VideoPlayer.this, MainActivity.class);
+                mIntent.putExtra("pos", 1);
+                startActivity(mIntent);
+            }
+        });
     }
     @Override
     public void onPause() {
-        Log.d("TAG", "onPause called");
+        Log.d(TAG, "onPause called");
         super.onPause();
         stopPosition = mVideoView.getCurrentPosition();
         mVideoView.pause();
@@ -55,7 +70,7 @@ public class VideoPlayer extends Activity {
     @Override
     public void onResume() {
         super.onResume();
-        Log.d("TAG", "onResume called");
+        Log.d(TAG, "onResume called");
         mVideoView.seekTo(stopPosition);
         mVideoView.start();
     }
