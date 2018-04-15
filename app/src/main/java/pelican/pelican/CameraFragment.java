@@ -2,7 +2,6 @@ package pelican.pelican;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 import android.media.CamcorderProfile;
@@ -17,10 +16,8 @@ import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
 import java.io.File;
 import java.io.IOException;
-
 
 /**
  * Created by Sebastian on 3/4/2018.
@@ -30,8 +27,9 @@ public class CameraFragment extends Fragment implements TextureView.SurfaceTextu
     private TextureView mTextureView;
     private MediaRecorder mMediaRecorder;
     private SurfaceTexture mSurface;
-    private String dir;
+    private File tempVideoFile;
     private int currentCamera = Camera.CameraInfo.CAMERA_FACING_BACK;
+    private static final String TAG = "CameraFragment";
 
     public static CameraFragment newInstance(){
         CameraFragment fragment = new CameraFragment();
@@ -45,8 +43,16 @@ public class CameraFragment extends Fragment implements TextureView.SurfaceTextu
         mTextureView.setSurfaceTextureListener(this);
 
         Context mContext = getActivity();
-        dir = mContext.getCacheDir().getAbsolutePath();
-        dir += "/video.mp4";
+
+        // get temp file path
+        File tempDir = new File(mContext.getCacheDir().getAbsolutePath());
+
+        // create temp file
+        try {
+            tempVideoFile = File.createTempFile("VID", ".mp4", tempDir);
+        } catch (IOException e){
+            Log.e(TAG, "Failed to create temporary video file: " + e.toString());
+        }
 
         final ImageView swapButton = view.findViewById(R.id.swapButton);
         ImageView recordButton = view.findViewById(R.id.recordButton);
@@ -56,7 +62,7 @@ public class CameraFragment extends Fragment implements TextureView.SurfaceTextu
             public boolean onTouch(View view, MotionEvent motionEvent) {
                     switch (motionEvent.getAction()) {
                         case MotionEvent.ACTION_DOWN:
-                            Log.i("TAG", "ACTION_DOWN");
+                            Log.i(TAG, "ACTION_DOWN");
                             startMediaRecorder();
                             swapButton.setVisibility(View.GONE);
                             break;
@@ -64,18 +70,20 @@ public class CameraFragment extends Fragment implements TextureView.SurfaceTextu
                             Log.i("TAG", "moving");
                             break;*/
                         case MotionEvent.ACTION_UP:
-                            Log.i("TAG", "ACTION_UP");
+                            Log.i(TAG, "ACTION_UP");
                             // stop recording and release camera
                             try {
                                 mMediaRecorder.stop();  // stop the recording
                             }
                             catch (RuntimeException e) {
-                                Log.d("TAG", "RuntimeException: stop() is called immediately after start()");
+                                Log.d(TAG, "RuntimeException: stop() is called immediately after start()");
                                 swapButton.setVisibility(View.VISIBLE);
                                 break;
                             }
                             releaseMediaRecorder();
-                            startActivity(new Intent(getActivity(), VideoPlayer.class));
+                            Intent videoPlayerIntent = new Intent(getActivity(), VideoPlayer.class);
+                            videoPlayerIntent.putExtra("video_file_path", tempVideoFile.getPath());
+                            startActivity(videoPlayerIntent);
                             break;
                     }
                 return true;
@@ -179,7 +187,7 @@ public class CameraFragment extends Fragment implements TextureView.SurfaceTextu
         CamcorderProfile profile = CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH);
         mMediaRecorder.setProfile(profile);
 
-        mMediaRecorder.setOutputFile(dir);
+        mMediaRecorder.setOutputFile(tempVideoFile.getPath());
         mMediaRecorder.setMaxDuration(7000);
 
         try {
