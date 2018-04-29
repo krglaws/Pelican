@@ -3,13 +3,13 @@ To Do:
 April 9th
   Permissions Prompt      - DONE
   Finish video uploading  - mostly done
-                              - php script needs to accept video file extensions
-                              - generate new names for each video file created
+                              - php script needs to accept video file extensions - DONE
+                              - generate new names for each video file created - DONE
   Splash Screen Graphic   - DONE
   
 April 16th
   Video Streaming
-  Make Registration/Login screens prettier
+  Make Registration/Login screens prettier - DONE
   Main Feed UI  
 
 April 23

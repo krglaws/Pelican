@@ -71,6 +71,9 @@ public class VideoPlayer extends Activity {
     public void onResume() {
         super.onResume();
         Log.d(TAG, "onResume called");
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
         mVideoView.seekTo(stopPosition);
         mVideoView.start();
     }
