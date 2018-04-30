@@ -17,14 +17,14 @@ public class Profile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile);
-        
+
         Button signOut = findViewById(R.id.signOutButton);
         signOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FirebaseAuth mAuth = FirebaseAuth.getInstance();
                 mAuth.signOut();
-                Intent loginIntent = new Intent(Profile.this, LoginActivity.class);
+                Intent loginIntent = new Intent(Profile.this, ChooseLoginRegistrationActivity.class);
                 startActivity(loginIntent);
             }
         });
