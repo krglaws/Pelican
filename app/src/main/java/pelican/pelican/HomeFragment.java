@@ -18,12 +18,12 @@ public class HomeFragment extends Fragment{
         HomeFragment fragment = new HomeFragment();
         return fragment;
     }
-
+    ImageView profileButton;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        ImageView profileButton = view.findViewById(R.id.profileButton);
+        profileButton = view.findViewById(R.id.profileButton);
         profileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -33,4 +33,5 @@ public class HomeFragment extends Fragment{
         });
         return view;
     }
+
 }

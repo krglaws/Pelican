@@ -76,7 +76,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 final String password1 = mPassword1.getText().toString();
                 final String password2 = mPassword2.getText().toString();
 
-                TextView requireMessage = findViewById(R.id.requireMessage);
+                final TextView requireMessage = findViewById(R.id.requireMessage);
 
                 // if at least one of the fields are empty, display error '*'
                 if (name.equals("") || email.equals("") || password1.equals("") || password2.equals("")) {
@@ -100,7 +100,8 @@ public class RegistrationActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (!task.isSuccessful()) {
-                                Toast.makeText(RegistrationActivity.this, "Registration Failed", Toast.LENGTH_SHORT).show();
+                                requireMessage.setText("Registration failed, please try again!");
+                                requireMessage.setVisibility(View.VISIBLE);
 
                             } else {
                                 String userId = mAuth.getCurrentUser().getUid();
