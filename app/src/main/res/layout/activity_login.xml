@@ -8,51 +8,41 @@
     android:orientation="vertical"
     android:background="@drawable/gradient">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.01"
-        android:id="@+id/requireEmail"
-        android:text="*"
-        android:textColor="@android:color/holo_red_dark"
-        android:visibility="invisible"/>
     <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.3"
+        android:layout_width="300dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="75dp"
         android:id="@+id/email"
         android:hint="Email"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.01"
-        android:id="@+id/requirePassword"
-        android:text="*"
-        android:textColor="@android:color/holo_red_dark"
-        android:visibility="invisible"/>
     <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.3"
+        android:layout_width="300dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center_horizontal"
         android:id="@+id/password"
         android:hint="Password"
         android:inputType="textPassword"/>
 
     <TextView
+        android:id="@+id/requireMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0.01"
-        android:id="@+id/requireMessage"
-        android:text="* Please fill in required fields"
-        android:textColor="@android:color/holo_red_dark"
-        android:visibility="invisible"/>
+        android:layout_marginTop="7dp"
+        android:layout_marginBottom="15dp"
+        android:text="Your username or password is incorrect!"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@android:color/holo_blue_dark"
+        android:visibility="invisible" />
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.3"
-        android:background="@color/colorAccent"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:textStyle="bold"
+        android:textSize="25dp"
+        android:layout_marginBottom="250dp"
+        android:textColor="@color/white"
+        android:background="@color/orange"
         android:text="Login"
+        android:layout_gravity="center_horizontal"
         android:id="@+id/login"/>
 
 </LinearLayout>

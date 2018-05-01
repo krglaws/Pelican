@@ -76,44 +76,21 @@ public class RegistrationActivity extends AppCompatActivity {
                 final String password1 = mPassword1.getText().toString();
                 final String password2 = mPassword2.getText().toString();
 
-                // warnings
-                TextView requireName = findViewById(R.id.requireName);
-                TextView requireEmail = findViewById(R.id.requireEmail);
-                TextView passwdNoMatch = findViewById(R.id.passwdNoMatch);
-                TextView requirePassword1 = findViewById(R.id.requirePassword1);
-                TextView requirePassword2 = findViewById(R.id.requirePassword2);
                 TextView requireMessage = findViewById(R.id.requireMessage);
 
                 // if at least one of the fields are empty, display error '*'
                 if (name.equals("") || email.equals("") || password1.equals("") || password2.equals("")) {
-                    requireName.setVisibility((name.equals("")) ? View.VISIBLE : View.INVISIBLE);
-                    requireEmail.setVisibility((email.equals("")) ? View.VISIBLE : View.INVISIBLE);
-                    requirePassword1.setVisibility((password1.equals("")) ? View.VISIBLE : View.INVISIBLE);
-                    requirePassword2.setVisibility((password2.equals("")) ? View.VISIBLE : View.INVISIBLE);
+                    requireMessage.setText("Please fill in all required fields!");
                     requireMessage.setVisibility(View.VISIBLE);
-                    passwdNoMatch.setVisibility(View.INVISIBLE);
                 }
 
                 // check if passwords are matching
                 else if (!password1.equals(password2)){
 
-                    // set other warnings to invisible since they are not empty
-                    requireName.setVisibility(View.INVISIBLE);
-                    requireEmail.setVisibility(View.INVISIBLE);
-                    requireMessage.setVisibility(View.INVISIBLE);
-
-                    // set password mismatch warning
-                    requirePassword1.setVisibility(View.VISIBLE);
-                    requirePassword2.setVisibility(View.VISIBLE);
-                    passwdNoMatch.setVisibility(View.VISIBLE);
+                    requireMessage.setText("Your passwords do not match!");
 
                 } else {
                     // clear warnings
-                    requirePassword1.setVisibility(View.INVISIBLE);
-                    requirePassword2.setVisibility(View.INVISIBLE);
-                    passwdNoMatch.setVisibility(View.INVISIBLE);
-                    requireName.setVisibility(View.INVISIBLE);
-                    requireEmail.setVisibility(View.INVISIBLE);
                     requireMessage.setVisibility(View.INVISIBLE);
 
                     // send email and password to Firebase server

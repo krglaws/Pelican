@@ -1,10 +1,12 @@
 package pelican.pelican;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -71,21 +73,15 @@ public class LoginActivity extends AppCompatActivity {
             final String password = mPassword.getText().toString();
 
             // warnings
-            TextView requireEmail = findViewById(R.id.requireEmail);
-            TextView requirePassword = findViewById(R.id.requirePassword);
-            TextView requireMessage = findViewById(R.id.requireMessage);
+            final TextView requireMessage = findViewById(R.id.requireMessage);
 
             // if at least one of the fields are empty, display error '*'
             if (email.equals("") || password.equals("")){
-                requireEmail.setVisibility((email.equals("")) ? View.VISIBLE : View.INVISIBLE);
-                requirePassword.setVisibility((password.equals("")) ? View.VISIBLE : View.INVISIBLE);
                 requireMessage.setVisibility(View.VISIBLE);
 
             // send email and password to Firebase server
             } else {
                 // clear warnings
-                requireEmail.setVisibility(View.INVISIBLE);
-                requirePassword.setVisibility(View.INVISIBLE);
                 requireMessage.setVisibility(View.INVISIBLE);
                 mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener( LoginActivity.this, new OnCompleteListener<AuthResult>() {
 
@@ -93,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (!task.isSuccessful()) {
-                            Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
+                            requireMessage.setVisibility(View.VISIBLE);
                         }
                     }
                 });

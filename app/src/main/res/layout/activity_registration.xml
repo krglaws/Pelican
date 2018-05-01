@@ -7,91 +7,57 @@
     tools:context="pelican.pelican.LoginActivity"
     android:orientation="vertical"
     android:background="@drawable/gradient">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.01"
-        android:id="@+id/requireName"
-        android:text="*"
-        android:textColor="@android:color/holo_red_dark"
-        android:visibility="invisible"/>
     <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.3"
+        android:layout_marginTop="40dp"
+        android:layout_width="300dp"
+        android:layout_height="55dp"
+        android:layout_gravity="center_horizontal"
         android:id="@+id/name"
         android:hint="User Name"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.01"
-        android:id="@+id/requireEmail"
-        android:text="*"
-        android:textColor="@android:color/holo_red_dark"
-        android:visibility="invisible"/>
     <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.3"
+        android:layout_width="300dp"
+        android:layout_height="55dp"
+        android:layout_gravity="center_horizontal"
         android:id="@+id/email"
         android:hint="Email"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.01"
-        android:id="@+id/passwdNoMatch"
-        android:text="Password does not match"
-        android:textColor="@android:color/holo_red_dark"
-        android:visibility="invisible"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.01"
-        android:id="@+id/requirePassword1"
-        android:text="*"
-        android:textColor="@android:color/holo_red_dark"
-        android:visibility="invisible"/>
     <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.3"
+        android:layout_width="300dp"
+        android:layout_height="55dp"
+        android:layout_gravity="center_horizontal"
         android:id="@+id/password1"
         android:hint="Password"
         android:inputType="textPassword"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.01"
-        android:id="@+id/requirePassword2"
-        android:text="*"
-        android:textColor="@android:color/holo_red_dark"
-        android:visibility="invisible"/>
     <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.3"
+        android:layout_width="300dp"
+        android:layout_height="55dp"
+        android:layout_gravity="center_horizontal"
         android:id="@+id/password2"
-        android:hint="Reenter Password"
+        android:hint="Re-enter password"
         android:inputType="textPassword"/>
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0.01"
         android:id="@+id/requireMessage"
-        android:text="* Please fill in required fields"
-        android:textColor="@android:color/holo_red_dark"
-        android:visibility="invisible"/>
+        android:text="Please fill in all required fields!"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="13dp"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@android:color/holo_blue_dark"
+        android:visibility="invisible" />
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="@color/colorPrimary"
+        android:layout_width="150dp"
+        android:layout_height="55dp"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:layout_marginBottom="280dp"
+        android:textColor="@color/white"
+        android:background="@color/orange"
         android:text="Register"
+        android:layout_gravity="center_horizontal"
         android:id="@+id/register"/>
 
 </LinearLayout>
