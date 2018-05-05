@@ -24,6 +24,9 @@ public class MainActivity extends AppCompatActivity {
         mViewPager.setAdapter(adapterViewPager);
         mViewPager.setCurrentItem(position);
         mViewPager.setPageTransformer(true, new CustomPageTransformer());
+
+        TabsView tabsView = findViewById(R.id.tabsView);
+        tabsView.setViewPager(mViewPager);
     }
     //custom pager adapter
     private static class CustomPagerAdapter extends FragmentPagerAdapter {
