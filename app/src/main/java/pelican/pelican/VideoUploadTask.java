@@ -2,6 +2,9 @@ package pelican.pelican;
 
 import android.os.AsyncTask;
 import android.util.Log;
+
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -23,8 +26,10 @@ public class VideoUploadTask extends AsyncTask<String, Void, Integer> {
 
     @Override
     protected Integer doInBackground(String... strings) {
-
-        String uploadServerUri = "http://entropy7.nas.eckerd.edu/pelican/upload.php";
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        String userName = mAuth.getCurrentUser().getDisplayName();
+        String uID = mAuth.getUid();
+        String uploadServerUri = "http://198.187.213.142:5000/pelican?username=" + userName + "&userid=" + uID;
         String sourceFileUri = strings[0];
         File tempVideoFile = new File(sourceFileUri);
         int bytesRead, bytesAvailable, bufferSize, serverResponseCode = -1;

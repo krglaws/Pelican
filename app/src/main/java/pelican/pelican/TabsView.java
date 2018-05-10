@@ -90,8 +90,8 @@ public class TabsView extends FrameLayout implements ViewPager.OnPageChangeListe
             int newColor = (int) mArgbEval.evaluate(positionOffset, mainColor, fadeColor);
             homeButton.setColorFilter(newColor);
             cameraButton.setColorFilter(color);
-            homeButton.setAlpha(0.8F + (1 - positionOffset));
-            cameraButton.setAlpha(0.8F + positionOffset);
+            homeButton.setAlpha(0.75F + (1 - positionOffset));
+            cameraButton.setAlpha(0.75F + positionOffset);
 
             //scale
             homeButton.setScaleX(1 + (0.3F * (1 - positionOffset)));
@@ -106,8 +106,8 @@ public class TabsView extends FrameLayout implements ViewPager.OnPageChangeListe
             int newColor = (int) mArgbEval.evaluate(positionOffset, mainColor, fadeColor);
             homeButton.setColorFilter(color);
             cameraButton.setColorFilter(newColor);
-            homeButton.setAlpha(0.8F + positionOffset);
-            cameraButton.setAlpha(0.8F + (1 - positionOffset));
+            homeButton.setAlpha(0.75F + positionOffset);
+            cameraButton.setAlpha(0.75F + (1 - positionOffset));
 
             line.setTranslationX(-(viewTranslationX * (1-positionOffset)));
 

@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -104,6 +105,10 @@ public class RegistrationActivity extends AppCompatActivity {
                                 requireMessage.setVisibility(View.VISIBLE);
 
                             } else {
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                        .setDisplayName(name).build();
+                                user.updateProfile(profileUpdates);
                                 String userId = mAuth.getCurrentUser().getUid();
                                 DatabaseReference currUserDb = FirebaseDatabase.getInstance().getReference().child("users").child(userId);
                                 Map userInfo = new HashMap<>();
