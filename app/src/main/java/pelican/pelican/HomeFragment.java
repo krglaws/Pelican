@@ -1,5 +1,6 @@
 package pelican.pelican;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -86,8 +87,7 @@ public class HomeFragment extends Fragment{
         refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.detach(HomeFragment.this).attach(HomeFragment.this).commit();
+                getActivity().recreate();
             }
         });
         return view;
