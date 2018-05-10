@@ -17,15 +17,8 @@ public class Video {
     public String getVideoUrl() {
         return videoUrl;
     }
-    public String getVideoOwner(){
+
+    public String getVideoOwner() {
         return videoOwner;
     }
-    //public void setVideoUrl(String videoUrl) {
-    //    this.videoUrl = videoUrl;
-    //}
-
-    //public void setVideoOwner(String owner){
-     //   this.videoOwner = owner;
-    //}
-
 }
