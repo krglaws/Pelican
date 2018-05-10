@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -28,6 +29,7 @@ public class HomeFragment extends Fragment{
 
     private ListView mVideoListView;
     private List<Video> mVideoList = new ArrayList<>();
+    private Set<String> mURLSet = new HashSet<>();
     private VideoAdapter mVideoAdapter;
 
     public static HomeFragment newInstance(){
@@ -56,14 +58,16 @@ public class HomeFragment extends Fragment{
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
+
         String[] videos = data.split(" ");
         String videoName;
         for (int i = 1; i < videos.length; i+=5) {
             videoName = videos[i]; //vid is every 5 spots
-            String displayName = videos[i + 1];
-            Video video = new Video("http://198.187.213.142:5000/pelican?filename=" + videoName);
-            video.setVideoOwner(displayName);
-            mVideoList.add(video);
+            if (mURLSet.add(videoName)) {
+                String displayName = videos[i + 1];
+                Video video = new Video("http://198.187.213.142:5000/pelican?filename=" + videoName, displayName);
+                mVideoList.add(video);
+            }
         }
 
         mVideoAdapter = new VideoAdapter(getContext(), mVideoList);

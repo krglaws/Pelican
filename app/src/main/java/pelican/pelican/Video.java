@@ -9,7 +9,7 @@ public class Video {
     private String videoUrl;
     private String videoOwner;
 
-    public Video(String videoUrl) {
+    public Video(String videoUrl, String videoOwner) {
         this.videoUrl = videoUrl;
         this.videoOwner = videoOwner;
     }
@@ -17,15 +17,15 @@ public class Video {
     public String getVideoUrl() {
         return videoUrl;
     }
-
-    public void setVideoUrl(String videoUrl) {
-        this.videoUrl = videoUrl;
-    }
-
-    public void setVideoOwner(String owner){
-        this.videoOwner = owner;
-    }
     public String getVideoOwner(){
         return videoOwner;
     }
+    //public void setVideoUrl(String videoUrl) {
+    //    this.videoUrl = videoUrl;
+    //}
+
+    //public void setVideoOwner(String owner){
+     //   this.videoOwner = owner;
+    //}
+
 }
