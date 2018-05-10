@@ -23,6 +23,9 @@ public class Video {
     }
 
     public void setVideoOwner(String owner){
-        this.videoOwner = videoOwner;
+        this.videoOwner = owner;
+    }
+    public String getVideoOwner(){
+        return videoOwner;
     }
 }

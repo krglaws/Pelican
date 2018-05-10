@@ -3,6 +3,7 @@ package pelican.pelican;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.ArrayAdapter;
 import android.content.Context;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 import android.widget.VideoView;
 
 import java.util.List;
@@ -28,6 +30,7 @@ public class VideoAdapter extends ArrayAdapter<Video> {
     private Context mContext;
     private List<Video> mVideos;
     private boolean playing = false;
+    private TextView displayNameView;
 
     public VideoAdapter(@NonNull Context context, @NonNull List<Video> objects) {
         super(context, R.layout.list_row, objects);
@@ -41,6 +44,7 @@ public class VideoAdapter extends ArrayAdapter<Video> {
         final ViewHolder holder;
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.list_row, null);
+            displayNameView = convertView.findViewById(R.id.displayName);
             holder = new ViewHolder();
 
             holder.videoView = convertView.findViewById(R.id.videoView);
@@ -56,6 +60,8 @@ public class VideoAdapter extends ArrayAdapter<Video> {
             String url = video.getVideoUrl();
             final Uri videoUri = Uri.parse(url);
             holder.videoView.setVideoURI(videoUri);
+            displayNameView.setText(video.getVideoOwner());
+            Log.e("TESTING", video.getVideoOwner() + "");
             holder.videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mp) {

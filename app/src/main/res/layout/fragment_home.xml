@@ -20,4 +20,13 @@
         android:layout_gravity="center|top"
         android:layout_marginTop="30dp"/>
 
+    <ImageView
+        android:id="@+id/refreshButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_refresh_black_24dp"
+        android:layout_gravity="left|top"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"/>
+
 </FrameLayout>
