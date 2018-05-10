@@ -3,15 +3,36 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/userName"
+        android:textStyle="bold"
+        android:textSize="25dp"
+        android:textColor="@color/orange"
+        android:text="UserName"
+        android:layout_marginBottom="200dp"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/pelican_logo"
+        ></ImageView>
 
     <Button
         android:id="@+id/signOutButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:background="@color/blue"
+        android:textStyle="bold"
         android:layout_gravity="center|bottom"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="80dp"
+        android:textColor="@color/white"
         android:text="Sign Out" />
 
 </FrameLayout>
