@@ -13,7 +13,7 @@ import java.net.URL;
 /**
  * Created by Sebastian on 5/10/2018.
  */
-
+//Code adapted from Jason Cromer, Android Developer
 public class GetRequest extends AsyncTask<String, Void, String> {
 
     public static final String REQUEST_METHOD = "GET";

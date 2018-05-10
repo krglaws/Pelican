@@ -19,7 +19,7 @@ import java.net.URL;
 /**
  * Created by kyleg on 4/6/2018.
  */
-
+//Code adapted from StackOverflow
 public class VideoUploadTask extends AsyncTask<String, Void, Integer> {
 
     private static final String TAG = "VideoUploadTask";

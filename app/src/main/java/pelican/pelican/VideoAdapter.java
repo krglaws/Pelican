@@ -30,7 +30,6 @@ public class VideoAdapter extends ArrayAdapter<Video> {
     private Context mContext;
     private List<Video> mVideos;
     private boolean playing = false;
-    private TextView displayNameView;
 
     public VideoAdapter(@NonNull Context context, @NonNull List<Video> objects) {
         super(context, R.layout.list_row, objects);
@@ -40,14 +39,14 @@ public class VideoAdapter extends ArrayAdapter<Video> {
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent) {
         final ViewHolder holder;
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.list_row, null);
-            displayNameView = convertView.findViewById(R.id.displayName);
             holder = new ViewHolder();
 
             holder.videoView = convertView.findViewById(R.id.videoView);
+            holder.nameView = convertView.findViewById(R.id.displayName);
 
             convertView.setTag(holder);
         } else {
@@ -60,33 +59,34 @@ public class VideoAdapter extends ArrayAdapter<Video> {
             String url = video.getVideoUrl();
             final Uri videoUri = Uri.parse(url);
             holder.videoView.setVideoURI(videoUri);
-            displayNameView.setText(video.getVideoOwner());
+            holder.nameView.setText(video.getVideoOwner());
             Log.e("TESTING", video.getVideoOwner() + "");
+            final View finalConvertView = convertView;
             holder.videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mp) {
+                    finalConvertView.findViewById(R.id.loadingLayout).setVisibility(View.GONE);
                     mp.setLooping(true);
-                }
-            });
-
-            holder.videoView.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View view, MotionEvent motionEvent) {
-                    switch (motionEvent.getAction()) {
-                        case MotionEvent.ACTION_DOWN:
-                            break;
-                        case MotionEvent.ACTION_UP:
-                            if (!playing) {
-                                holder.videoView.start();
-                                playing = true;
+                    holder.videoView.setOnTouchListener(new View.OnTouchListener() {
+                        @Override
+                        public boolean onTouch(View view, MotionEvent motionEvent) {
+                            switch (motionEvent.getAction()) {
+                                case MotionEvent.ACTION_DOWN:
+                                    break;
+                                case MotionEvent.ACTION_UP:
+                                    if (!playing) {
+                                        holder.videoView.start();
+                                        playing = true;
+                                    }
+                                    else {
+                                        holder.videoView.pause();
+                                        playing = false;
+                                    }
+                                    break;
                             }
-                            else {
-                                holder.videoView.pause();
-                                playing = false;
-                            }
-                            break;
-                    }
-                    return true;
+                            return true;
+                        }
+                    });
                 }
             });
         } catch (Exception e) {
@@ -97,6 +97,6 @@ public class VideoAdapter extends ArrayAdapter<Video> {
 
     public static class ViewHolder {
         VideoView videoView;
-
+        TextView nameView;
     }
 }
